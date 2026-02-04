@@ -1,0 +1,27 @@
+{
+  "name": "blogsite",
+  "version": "1.0.0",
+  "description": "TechCrush Cohort 5 Backend Engineering Group 4 mini project",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodesbyEkan/BlogSite.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/CodesbyEkan/BlogSite/issues"
+  },
+  "homepage": "https://github.com/CodesbyEkan/BlogSite#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
