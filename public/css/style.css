@@ -1,0 +1,35 @@
+body {
+  font-family: montserrat;
+  margin: 0;
+  padding: o;
+}
+
+.nav {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.5em;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.nav p > a {
+  font-size: 1.2rem;
+  font-weight: 400;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.header {
+  text-align: center;
+  margin: 0;
+  padding: 50% 0;
+  height: 25vh;
+}
+
+.footer {
+  text-align: center;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.8);
+}

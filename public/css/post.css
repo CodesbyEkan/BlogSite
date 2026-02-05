@@ -1,0 +1,68 @@
+body {
+  font-family: montserrat;
+  margin: 0;
+  padding: o;
+}
+
+.nav {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.5em;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.nav p > a {
+  font-size: 1.2rem;
+  font-weight: 400;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.header {
+  margin: 0;
+  text-align: center;
+}
+
+.post-div {
+  margin: 0;
+  padding: 0;
+}
+
+.posts {
+  margin: 1em 1.5em;
+  padding: 1em;
+  border: 2px solid whitesmoke;
+  border-radius: 15px;
+}
+
+.author-date {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+}
+
+.posts h2 {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.posts > p {
+  color: rgba(0, 0, 0, 0.8);
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+}
+
+p #tag {
+  font-weight: 500;
+}
+
+.footer {
+  text-align: center;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.8);
+}
