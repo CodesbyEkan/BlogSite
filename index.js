@@ -2,7 +2,7 @@ import express from "express";
 import path from "node:path";
 import cors from "cors";
 import { apiRouter } from "./routes/apiRoutes.js";
-import { pageRouter } from "./routes/pageRoutes.js";
+import { pageRouter } from "./routes/postRoutes.js";
 
 const PORT = 5000;
 const app = express();

@@ -1,7 +1,7 @@
 import express from "express";
 import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,10 +16,10 @@ function getPosts() {
     const data = fs.readFileSync(postsFilePath, "utf-8");
     return JSON.parse(data);
   } catch (error) {
-    console.error( "Error reading posts:", error.message);
-    return [];    
+    console.error("Error reading posts:", error.message);
+    return [];
   }
-};
+}
 
 // Route to show all posts
 router.get("/", (req, res) => {
@@ -36,7 +36,7 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   try {
     const posts = getPosts();
-    const post = posts.find(p => p.id === parseInt(req.params.id));
+    const post = posts.find((p) => p.id === parseInt(req.params.id));
     if (!post) return res.status(404).send("Post not found!");
     res.render("post", { post });
   } catch (error) {
@@ -44,6 +44,5 @@ router.get("/:id", (req, res) => {
     res.status(500).send("Server error occurred");
   }
 });
-
 
 export default router;

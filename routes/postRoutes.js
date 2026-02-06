@@ -1,5 +1,5 @@
 import express from "express";
-import { renderHomepage } from "../controllers/renderHomepage.js";
+import { renderHomepage } from "../controllers/renderHomePage.js";
 import { getPost } from "../controllers/getPost.js";
 
 export const pageRouter = express.Router();
