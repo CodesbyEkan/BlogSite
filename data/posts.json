@@ -1,11 +1,21 @@
 [
   {
     "id": 1,
-    "author": "Sample Author",
-    "title": "Sample Post",
-    "category": "Sample Category",
-    "tags": ["sample", "sample", "sample"],
-    "content": "This is just a sample post. I don't even know what to write to be very honest!",
+    "author": "Declan Solomon",
+    "title": "Introduction to Backend Development",
+    "category": "webDev",
+    "tags": ["web development", "API","express", "nodejs"],
+    "content": "Backend development, often called server-side development, involves creating the behind-the-scenes functionality of applications, including databases, server logic, and APIs, which manage data and power the user-facing frontend. It acts as the core engine for user authentication, data storage, and business logic, ensuring secure and efficient performance.",
+    "createdAt": "2026-02-04",
+    "updatedAt": "2026-02-04"
+  },
+  {
+    "id":2,
+    "author": "Sola Nnamdi",
+    "title": "Blockchain 101: An Introductory Guide",
+    "category": "blokchain",
+    "tags": ["blockchain", "web3","decentralizatio ", "smart contracts"],
+    "content": "Blockchain is a decentralized, distributed, and immutable digital ledger that records transactions across a network of computers, ensuring data security and transparency without the need for intermediaries like banks. It links data in chronological, cryptographic `blocks`, making tampering nearly impossible. Primarily used for cryptocurrencies and secure, transparent data sharing, it reduces fraud and costs.",
     "createdAt": "2026-02-04",
     "updatedAt": "2026-02-04"
   }
