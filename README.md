@@ -21,7 +21,7 @@ BLOGSITE/
     > controllers --> Logic
     > data
     > public --> Template
-    > routes --> API endpoint
+    > routes --> API endpoints
     > utils
     .gitignore
     index.js
@@ -29,6 +29,8 @@ BLOGSITE/
     package.joson
     README.md
 ```
+
+**EJS TEMPLATE**
 
 ## HOW IT WORKS
 
