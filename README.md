@@ -18,10 +18,10 @@ The primary goal was to build a functional blog site without a database, using E
 
 ```
 BLOGSITE/
-    > controllers
+    > controllers --> Logic
     > data
-    > public
-    > routes
+    > public --> Template
+    > routes --> API endpoint
     > utils
     .gitignore
     index.js
@@ -30,7 +30,9 @@ BLOGSITE/
     README.md
 ```
 
-**HOW IT WORKS**
+## HOW IT WORKS
+
+## API Endpoint
 
 ## HELP
 
