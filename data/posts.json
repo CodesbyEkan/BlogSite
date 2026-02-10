@@ -1,13 +1,12 @@
 [
-    {
-        "id": 1,
-        "author": "Sample Author",
-        "title": "Sample Post",
-        "category": "Sample Category",
-        "tags": ["sample", "sample", "sample"],
-        "content": "This is just a sample post. I don't even know what to write to be very honest!",
-        "createdAt": "2026-02-04T12:00:00.000Z",
-        "updatedAt": "2026-02-04T12:00:00.000Z"
-
-    }
+  {
+    "id": 1,
+    "author": "Sample Author",
+    "title": "Sample Post",
+    "category": "Sample Category",
+    "tags": ["sample", "sample", "sample"],
+    "content": "This is just a sample post. I don't even know what to write to be very honest!",
+    "createdAt": "2026-02-04",
+    "updatedAt": "2026-02-04"
+  }
 ]

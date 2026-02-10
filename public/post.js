@@ -13,7 +13,7 @@ async function getData() {
       let postTags = blogPost.tags;
       postTemplate += `<section class="posts">
                 <div class="author-date">
-                    <p>${blogPost.published_date}</p>
+                    <p>${blogPost.createdAt}</p>
                     <p>${blogPost.author}</p>
                 </div>
                 <h2>${blogPost.title}</h2>
