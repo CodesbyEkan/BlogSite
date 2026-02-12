@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Rendering blog post from an Express js server."
+    />
+    <link rel="stylesheet" href="/css/post.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>BlogSite</title>
+  </head>
+  <body>
+    <nav class="nav">
+      <h1>BlogSite</h1>
+      <p><a href="/">Home</a></p>
+    </nav>
+    <h1 class="header">Blog Posts</h1>
+    <main class="post-div" id="post-div"><% posts.forEach( post => {%>
+      <section class="posts">
+                <div class="author-date">
+                    <p><%= post.createdAt %></p>
+                    <p><%= post.author %></p>
+                </div>
+                <h2><%= post.title %></h2>
+                <p><%= post.content %></p>
+                <div class="tags">
+                    <p>
+                        <span id="tag">Tags: </span><%= post.tags.join(", ") %>
+                    </p>
+                </div>
+            </section>
+       <% });%>
+      </main>
+    <footer class="footer">&copy; 2026</footer>
+    <script src="/post.js" type="module"></script>
+  </body>
+</html>

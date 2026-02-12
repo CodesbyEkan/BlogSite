@@ -20,6 +20,7 @@
   "homepage": "https://github.com/CodesbyEkan/BlogSite#readme",
   "dependencies": {
     "cors": "^2.8.6",
+    "ejs": "^4.0.1",
     "express": "^5.2.1"
   },
   "devDependencies": {
