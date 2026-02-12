@@ -1,9 +1,7 @@
 import express from "express";
 import path from "node:path";
 import cors from "cors";
-import { apiRouter } from "./routes/apiRoutes.js";
 import { pageRouter } from "./routes/postRoutes.js";
-import { post_route } from "./routes/post_route.js";
 
 const PORT = 5000;
 const app = express();
@@ -12,10 +10,9 @@ export const __dirname = import.meta.dirname;
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
+app.set("view engine", "ejs");
 
 app.use("/", pageRouter);
-app.use("/api", apiRouter);
-app.use("/posts", post_route);
 
 app.listen(PORT, () =>
   console.log(`Server running on http://127.0.0.1:${PORT}.`),
