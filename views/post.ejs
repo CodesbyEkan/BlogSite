@@ -16,52 +16,76 @@
     <h1>BlogSite</h1>
     <p><a href="/">Home</a></p>
   </nav>
-  <h1 class="header">Blog Posts</h1>
-  <main class="post-div" id="post-div">
-    <% posts.forEach( post=> {%>
-      <section class="post">
-        <div class="author-date">
-          <p>
-            <%= post.createdAt %>
-          </p>
-          <p>
-            <%= post.author %>
-          </p>
-        </div>
-        <h2>
-          <%= post.title %>
-        </h2>
-        <p>
-          <%= post.content %>
-        </p>
-        <div class="tags">
-          <p>
-            <span id="tag">Tags: </span>
-            <%= post.tags.join(", ") %>
-          </p>
-        </div>
-      </section>
-    <% });%>
-  </main>
-  <footer class=" footer">&copy; 2026</footer>
-              <div class="loader">
-                <div class="spinner"></div>
-                <p>Loading...</p>
-              </div>
-              <script src="/post.js" type="module"></script>
-              <script>
 
-                document.addEventListener('DOMContentLoaded', () => {
-                  setTimeout(() => {
-                    const loader = document.querySelector('.loader');
-                    loader.style.opacity = '0';
-                    loader.style.transition = 'opacity 0.5s';
-                    setTimeout(() => {
-                      loader.style.display = 'none';
-                    }, 500);
-                  }, 2000);
-                });
-              </script>
+  <h1 class="header">Blog Posts</h1>
+
+  <main class="post-div" id="post-div">
+    <% if (locals.error) { %>
+      <div class="error-container" style="text-align: center; margin-top: 50px;">
+        <h2>Oops!</h2>
+        <p>
+          <%= error %>
+        </p>
+        <a href="/post">Back to all posts</a>
+      </div>
+      <% } else { %>
+
+        <!-- Appears when it's one post -->
+        <% if (posts.length === 1) { %>
+          <div class="navigation-link">
+            <a href="/post">← Back to all posts</a>
+          </div>
+        <% } %>
+
+        <!-- Looping through posts -->
+        <% posts.forEach( post=> { %>
+          <section class="post">
+            <div class="author-date">
+              <p>
+                <%= post.createdAt %>
+              </p>
+              <p>
+                <%= post.author %>
+              </p>
+            </div>
+            <h2>
+              <%= post.title %>
+            </h2>
+            <p>
+              <%= post.content %>
+            </p>
+            <div class="tags">
+              <p>
+                <span id="tag">Tags: </span>
+                <%= post.tags.join(", ") %>
+            </p>
+          </div>
+        </section>
+      <% }); %> 
+    <% } %> 
+  </main>
+
+  <footer class=" footer">&copy; 2026</footer>
+
+  <div class="loader">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+
+  <!-- Animation script -->
+  <script src="/post.js" type="module"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const loader = document.querySelector('.loader');
+        if (loader) {
+          loader.style.opacity = '0';
+          loader.style.transition = 'opacity 0.5s';
+          setTimeout(() => { loader.style.display = 'none'; }, 500);
+        }
+      }, 1000);
+    });
+  </script>
 </body>
 
 </html>
