@@ -1,8 +1,11 @@
 import express from "express";
-import { renderHomepage } from "../controllers/renderHomePage.js";
-import { getPost } from "../controllers/getPost.js";
+import { filterPost } from "../controllers/filterPost.js";
+import { viewPost } from "../controllers/viewPost.js";
+import { viewHomePage } from "../controllers/viewHomePage.js";
 
 export const pageRouter = express.Router();
 
-pageRouter.get("/", renderHomepage);
-pageRouter.get("/post", getPost);
+// pageRouter.get("/", renderHomepage);
+pageRouter.get("/", viewHomePage);
+pageRouter.get("/post", viewPost);
+pageRouter.get("/post/:id", filterPost);

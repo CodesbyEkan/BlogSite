@@ -22,10 +22,17 @@ body {
 }
 
 .header {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0;
-  padding: 50% 0;
-  height: 25vh;
+  padding: 0;
+  height: 42em;
+}
+
+.header #brand {
+  display: block;
+  font-size: 6rem;
 }
 
 .footer {
