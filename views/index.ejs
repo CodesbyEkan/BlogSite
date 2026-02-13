@@ -1,25 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Rendering blog post from an Express js server."
-    />
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <title>BlogSite</title>
-  </head>
-  <body>
-    <nav class="nav">
-      <h1>BlogSite</h1>
-      <p><a href="/post">posts</a></p>
-    </nav>
-    <div class="header">
-      <h1>Welcome to <span id="brand">BlogSite</span></h1>
-    </div>
-    <footer class="footer">Group 4 ~ Mini Project &copy;2026</footer>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Rendering blog post from an Express js server." />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <title>BlogSite</title>
+</head>
+<body>
+  <nav class="nav">
+    <h1>BlogSite</h1>
+    <p><a href="/post">posts</a></p>
+  </nav>
+  <div class="header">
+    <h1>Welcome to <span id="brand">BlogSite</span></h1>
+  </div>
+  <footer class="footer">Group 4 ~ Mini Project &copy;2026</footer>
+  <div class="loader">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const loader = document.querySelector('.loader');
+        loader.style.opacity = '0';
+        loader.style.transition = 'opacity 0.5s';
+        setTimeout(() => {
+          loader.style.display = 'none';
+        }, 500);
+      }, 2000);
+    });
+  </script>
+</body>
 </html>
