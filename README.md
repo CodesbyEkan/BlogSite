@@ -44,15 +44,19 @@ This project is a simple backend application built with _Express.js_ to serve a 
 
 **API Endpoint / Routes**
 GET/ --> Returns the homepage content
+
 _Controller:_ viewHomePage
 
 GET/post --> Returns a list of all posts
+
 _Controller:_ viewPost
 
-GET /post/:id --> Returns a single post by its ID
+GET /post/:id --> Returns a single post by its Id
+
 _URL Parameter:_ id — EACH ID of the post
 
 _Example Usage:_ GET /post/12
+
 _Controller:_ filterPost
 
 ### 2. Controllers
