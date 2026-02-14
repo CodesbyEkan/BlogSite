@@ -18,15 +18,16 @@ The primary goal was to build a functional blog site without a database, using E
 
 ```
 BLOGSITE/
-    > controllers --> Logic
-    > data
-    > public --> Template
-    > routes --> API endpoints
-    > utils
+    > controllers/ --> Logic
+    > data/
+    > public/ --> Template
+    > routes/ --> API endpoints
+    > utils/
+    > views/
     .gitignore
     index.js
     package-lock.json
-    package.joson
+    package.json
     README.md
 ```
 
