@@ -1,0 +1,11 @@
+$kind: http-request
+name: upload post
+url: ""
+method: GET
+body:
+  type: urlencoded
+  content:
+    title: A new era with AI
+    content: A new era with AI is here! How prepared are you?
+    author: Ekan Vick
+order: 1772530123635

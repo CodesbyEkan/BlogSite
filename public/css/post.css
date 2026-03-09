@@ -22,7 +22,7 @@ body {
 
 .spinner {
   border: 4px solid #f3f3f3;
-  border-top: 4px solid #4CAF50;
+  border-top: 4px solid #4caf50;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -31,8 +31,12 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loader p {
@@ -45,26 +49,27 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1em 1.5em;
-  color: #333;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 0.1em 1.5em;
+  color: #4caf50;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #fff;
 }
 
 .nav p > a {
   font-size: 1.2rem;
-  font-weight: 400;
+  font-weight: 700;
   text-decoration: none;
   text-transform: uppercase;
-  color: #333;
-  border: 2px solid #4CAF50;
+  background-color: #4caf50;
+  color: whitesmoke;
+  border: 2px solid #4caf50;
   border-radius: 5px;
   padding: 6px 12px;
   transition: all ease-in-out 0.2s;
 }
 
 .nav p > a:hover {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   transform: translateY(-2px);
 }
@@ -73,7 +78,7 @@ body {
   margin: 2em 0;
   text-align: center;
   animation: fadeIn 0.5s ease-in-out;
-  color: #4CAF50;
+  color: #4caf50;
 }
 
 .post-div {
@@ -89,14 +94,14 @@ body {
   padding: 1.5em;
   border: 2px solid #eee;
   border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
   background-color: #fff;
 }
 
 .post:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .author-date {
@@ -123,7 +128,7 @@ body {
 
 p #tag {
   font-weight: 500;
-  color: #4CAF50;
+  color: #4caf50;
 }
 
 .footer {
@@ -132,15 +137,25 @@ p #tag {
   color: #333;
   padding: 2em 0;
   background-color: #fff;
-  box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideIn {
-  from { transform: translateX(-20px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

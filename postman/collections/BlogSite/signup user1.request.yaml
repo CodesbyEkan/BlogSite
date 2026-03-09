@@ -1,0 +1,14 @@
+$kind: http-request
+name: signup user1
+url: localhost:5000/user/signup
+method: POST
+body:
+  type: urlencoded
+  content:
+    - key: name
+      value: " Ekan "
+    - key: email
+      value: enomy@gmail.com
+    - key: password
+      value: bfbhj&Hkhakai8i_
+order: 157136809984292
