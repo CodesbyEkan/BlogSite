@@ -80,23 +80,21 @@ body {
   align-items: center;
   justify-content: center;
   margin: 0;
-  padding: 0;
-  height: 100vh;
+  height: 92vh;
   background-color: #4caf50;
   color: #fff;
-  animation: fadeIn 1s ease-in-out;
 }
 
 .header #brand {
   display: block;
-  font-size: 6rem;
+  font-size: 5rem;
   animation: scaleIn 1s ease-in-out;
 }
 
 .header .cta-btn {
   display: flex;
   justify-content: space-between;
-  width: 25.2em;
+  width: 21.8em;
   margin: 1em;
 }
 
@@ -142,4 +140,48 @@ body {
     transform: scale(1);
     opacity: 1;
   }
+}
+
+/***************************************/
+/*            SIGN UP PAGE             */
+/***************************************/
+
+.signup-form {
+  display: flex;
+  margin: 0;
+  width: 22em;
+}
+
+.signup-form form {
+  width: 100%;
+}
+
+.signup-form form label {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.signup-form form input {
+  margin: 0.2em 0 1.6em 0;
+  padding: 0 1em;
+  height: 2.5em;
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  background-color: whitesmoke;
+  color: #4caf50;
+  box-sizing: border-box;
+}
+
+.signup-form > form > button {
+  width: 100%;
+  padding: 0.5em 2em;
+  font-family: montserrat;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #4caf50;
+  background-color: whitesmoke;
+  border: none;
 }

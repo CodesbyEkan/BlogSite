@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
 
 export const signupUser = (req, res) => {
@@ -33,9 +33,15 @@ export const createUser = async (req, res) => {
     });
   }
 
-  return res.status(201).json({
-    status: true,
-    message: "User created successfully!",
-    data: user,
-  });
+  return res
+    .status(201)
+    .json({
+      status: true,
+      message: "User created successfully!",
+      data: user,
+    });
+};
+
+export const signinUser = (req, res) => {
+  res.render("signin.ejs");
 };

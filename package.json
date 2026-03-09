@@ -4,7 +4,8 @@
   "description": "TechCrush Cohort 5 Backend Engineering Group 4 mini project",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "dev": "nodemon --watch src --watch views --watch public/css --ext js,mjs,ejs,css server.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +20,7 @@
   },
   "homepage": "https://github.com/CodesbyEkan/BlogSite#readme",
   "dependencies": {
-    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "ejs": "^4.0.1",
