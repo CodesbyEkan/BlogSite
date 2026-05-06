@@ -5,6 +5,10 @@ export const signupUser = (req, res) => {
   res.render("signup.ejs");
 };
 
+export const signinUser = (req, res) => {
+  res.render("signin.ejs");
+};
+
 export const createUser = async (req, res) => {
   const { name, email, password } = req.body;
   const checkEmail = await User.findOne({
@@ -33,15 +37,17 @@ export const createUser = async (req, res) => {
     });
   }
 
-  return res
-    .status(201)
-    .json({
-      status: true,
-      message: "User created successfully!",
-      data: user,
-    });
+  return res.status(303).redirect("/user/signin");
+
+  // return res.status(201).json({
+  //   status: true,
+  //   message: "User created successfully!",
+  //   data: user,
+  // });
 };
 
-export const signinUser = (req, res) => {
-  res.render("signin.ejs");
+export const loginUser = (req, res) => {
+  const { email, password } = req.body;
+  const checkUser = User.findOne({ where: { email } });
+  console.log(checkUser);
 };

@@ -175,9 +175,20 @@ body {
   box-sizing: border-box;
 }
 
-.signup-form > form > button {
-  width: 100%;
-  padding: 0.5em 2em;
+.signup-form form .btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn a {
+  /* text-decoration: none; */
+  color: #4caf50;
+}
+
+.signup-form form .btn button {
+  width: 40%;
+  padding: 0.5em 1em;
   font-family: montserrat;
   font-size: 1.4rem;
   font-weight: 700;

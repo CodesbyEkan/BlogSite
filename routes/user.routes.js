@@ -7,6 +7,7 @@ import {
 
 import {
   createUser,
+  loginUser,
   signupUser,
   signinUser,
 } from "../controllers/user.controller.js";
@@ -16,9 +17,4 @@ export const userRouter = express.Router();
 userRouter.get("/signup", signupUser);
 userRouter.get("/signin", signinUser);
 userRouter.post("/signup", userValidator, validateResultMiddleware, createUser);
-userRouter.post(
-  "/signin",
-  loginValidator,
-  validateResultMiddleware,
-  signinUser,
-);
+userRouter.post("/signin", loginValidator, validateResultMiddleware, loginUser);
