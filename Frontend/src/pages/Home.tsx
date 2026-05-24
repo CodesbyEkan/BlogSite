@@ -67,7 +67,7 @@ const Home = () => {
       try {
         const data = await getAllPosts();
         if (!cancelled) setFeaturedPosts(data.slice(0, FEATURED_COUNT));
-      } catch (err) {
+      } catch {
         // API unavailable — fall back to demo data silently
         try {
           const demo = await getAllPostsDemo();

@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { memo } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import type { Post } from "../../services/api";
 
 const categoryMap: Record<string, string> = {
@@ -47,9 +48,10 @@ interface PostCardProps {
   post: Post;
 }
 
-const PostCard = ({ post }: PostCardProps) => {
+const PostCard = memo(({ post }: PostCardProps) => {
+  const navigate = useNavigate();
   const category = getCategory(post.tags);
-  const imageUrl = getImage(post.id);
+  const imageUrl = post.coverImageUrl || getImage(post.id);
 
   return (
     <Link to={`/posts/${post.id}`}>
@@ -77,11 +79,11 @@ const PostCard = ({ post }: PostCardProps) => {
                 <span className="text-xs font-semibold">{post.date}</span>
               </div>
               <h3 className="text-xl font-semibold text-primary mb-2 group-hover:text-secondary transition-colors line-clamp-2"
-                  style={{ fontFamily: "'Geist', sans-serif" }}>
+                style={{ fontFamily: "'Geist', sans-serif" }}>
                 {post.title}
               </h3>
               <p className="text-base text-[#45464d] line-clamp-2 leading-relaxed"
-                 style={{ fontFamily: "'Source Serif 4', serif" }}>
+                style={{ fontFamily: "'Source Serif 4', serif" }}>
                 {post.content}
               </p>
             </div>
@@ -98,7 +100,16 @@ const PostCard = ({ post }: PostCardProps) => {
                   </span>
                 ))}
               </div>
-              <span className="text-xs text-[#45464d] whitespace-nowrap ml-3 font-medium">
+              <span
+                className="text-xs text-[#45464d] hover:text-secondary hover:underline whitespace-nowrap ml-3 font-semibold cursor-pointer transition-colors"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  const authorId = (post as { authorId?: string }).authorId;
+                  const identifier = authorId || post.author;
+                  navigate(`/profile/${encodeURIComponent(identifier)}`);
+                }}
+              >
                 {post.author}
               </span>
             </div>
@@ -107,6 +118,6 @@ const PostCard = ({ post }: PostCardProps) => {
       </article>
     </Link>
   );
-};
+});
 
 export default PostCard;

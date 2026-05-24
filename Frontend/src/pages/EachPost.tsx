@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import type { Post } from "../services/api";
 import { getPostById, getPostByIdDemo, getRelatedPosts, extractErrorMessage } from "../services/api";
+import { useAuth } from "../context/AuthContext";
+import { usePosts, type PostWithMeta } from "../context/PostContext";
 
 const placeholderImages = [
   "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80",
@@ -37,15 +39,38 @@ const avatarColors = [
 
 const EachPost = () => {
   const { id } = useParams<{ id: string }>();
+  const { user, isAuthenticated } = useAuth();
+  const { getPostById: getCtxPost } = usePosts();
   const [post, setPost] = useState<Post | null>(null);
+  const [postMeta, setPostMeta] = useState<PostWithMeta | null>(null);
   const [related, setRelated] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [retryKey, setRetryKey] = useState(0);
 
+  const contentParagraphs = useMemo(() => {
+    const text = post?.content;
+    if (!text) return [];
+    return text.split(/\r?\n\r?\n/).map((p) => p.trim()).filter(Boolean);
+  }, [post?.content]);
+
   useEffect(() => {
     if (!id) return;
     let cancelled = false;
+
+    // First check PostContext (user-created posts)
+    const ctxPost = getCtxPost(parseInt(id));
+    if (ctxPost) {
+      if (!cancelled) {
+        Promise.resolve().then(() => {
+          setPost(ctxPost);
+          setPostMeta(ctxPost);
+          setLoading(false);
+        });
+      }
+      return;
+    }
+
     const fetchPost = async () => {
       setLoading(true);
       setError(null);
@@ -69,7 +94,7 @@ const EachPost = () => {
     };
     fetchPost();
     return () => { cancelled = true; };
-  }, [id, retryKey]);
+  }, [id, retryKey, getCtxPost]);
 
   // Fetch related posts once the main post is loaded
   useEffect(() => {
@@ -127,12 +152,11 @@ const EachPost = () => {
     );
   }
 
-  const imageUrl = placeholderImages[(post.id - 1) % placeholderImages.length];
+  const imageUrl = post.coverImageUrl || placeholderImages[(post.id - 1) % placeholderImages.length];
   const category = getCategory(post.tags);
   const readTime = getReadTime(post.content);
   const avatarBg = avatarColors[post.id % avatarColors.length];
   const initials = post.author.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase();
-
 
   return (
     <article className="bg-background">
@@ -160,24 +184,46 @@ const EachPost = () => {
         </div>
 
         <h1 className="text-3xl md:text-4xl font-bold text-[#111827] leading-tight mb-6"
-            style={{ fontFamily: "'Geist', sans-serif" }}>
+          style={{ fontFamily: "'Geist', sans-serif" }}>
           {post.title}
         </h1>
 
         {/* Author + meta */}
         <div className="flex items-center gap-4 pb-6 border-b border-[#e5e7eb]">
-          <div className={`w-10 h-10 rounded-full ${avatarBg} flex items-center justify-center text-white text-sm font-bold shrink-0`}>
-            {initials}
-          </div>
-          <div>
-            <p className="text-sm font-semibold text-[#111827]">{post.author}</p>
-            <p className="text-xs text-[#6b7280]">Senior Engineering Blog</p>
-          </div>
+          <Link
+            to={`/profile/${encodeURIComponent(postMeta?.authorId || post.author)}`}
+            className="flex items-center gap-3 hover:text-secondary group transition-colors"
+            id="post-author-profile-link"
+          >
+            <div className={`w-10 h-10 rounded-full ${avatarBg} flex items-center justify-center text-white text-sm font-bold shrink-0 group-hover:shadow-md transition-shadow`}>
+              {initials}
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-[#111827] group-hover:text-secondary group-hover:underline">{post.author}</p>
+              <p className="text-xs text-[#6b7280]">Senior Engineering Blog</p>
+            </div>
+          </Link>
           <div className="ml-auto flex items-center gap-3 text-xs text-[#6b7280]">
             <span>{post.date}</span>
             <span>•</span>
             <span>{readTime} min read</span>
           </div>
+
+          {/* Edit button — visible only to the post author */}
+          {isAuthenticated && postMeta?.authorId && postMeta.authorId === user?.id && (
+            <Link
+              to={`/write/${post.id}`}
+              className="ml-3 inline-flex items-center gap-1.5 text-xs font-semibold text-secondary
+                         border border-secondary/30 px-4 py-2 rounded-full
+                         hover:bg-secondary hover:text-white transition-colors duration-200"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+              </svg>
+              Edit
+            </Link>
+          )}
         </div>
       </div>
 
@@ -194,14 +240,9 @@ const EachPost = () => {
       {/* Article body */}
       <div className="max-w-[720px] mx-auto px-6 pb-16">
         <div className="prose prose-lg max-w-none text-[#374151] leading-relaxed space-y-5"
-             style={{ fontFamily: "'Source Serif 4', serif", fontSize: "18px", lineHeight: "1.8" }}>
-          {post.content.split(". ").reduce<string[][]>((acc, sentence, i) => {
-            const groupIdx = Math.floor(i / 3);
-            if (!acc[groupIdx]) acc[groupIdx] = [];
-            acc[groupIdx].push(sentence);
-            return acc;
-          }, []).map((group, idx) => (
-            <p key={idx}>{group.join(". ")}{group[group.length - 1]?.endsWith(".") ? "" : "."}</p>
+          style={{ fontFamily: "'Source Serif 4', serif", fontSize: "18px", lineHeight: "1.8" }}>
+          {contentParagraphs.map((paragraph, idx) => (
+            <p key={idx} className="whitespace-pre-line">{paragraph}</p>
           ))}
         </div>
 
@@ -248,14 +289,14 @@ const EachPost = () => {
                     <div className="bg-white rounded-xl border border-[#e5e7eb] overflow-hidden hover:shadow-md transition-shadow">
                       <div className="aspect-[16/9] overflow-hidden bg-[#f3f4f6]">
                         <img src={relImage} alt={relPost.title}
-                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                       </div>
                       <div className="p-4">
                         <span className="text-[10px] font-bold tracking-widest text-secondary uppercase">
                           {relCategory}
                         </span>
                         <h3 className="text-sm font-bold text-[#111827] mt-1 line-clamp-2 group-hover:text-secondary transition-colors"
-                            style={{ fontFamily: "'Geist', sans-serif" }}>
+                          style={{ fontFamily: "'Geist', sans-serif" }}>
                           {relPost.title}
                         </h3>
                         <p className="text-xs text-[#6b7280] mt-1 line-clamp-2">{relPost.content}</p>

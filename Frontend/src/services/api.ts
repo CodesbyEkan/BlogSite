@@ -10,6 +10,7 @@ export interface Post {
   date: string;
   content: string;
   tags: string[];
+  coverImageUrl?: string;
 }
 
 export interface ApiError {

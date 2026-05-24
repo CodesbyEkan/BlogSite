@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState, useMemo, memo } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import type { Post } from "../services/api";
-import { getAllPosts, getAllPostsDemo, extractErrorMessage } from "../services/api";
+import { getAllPosts, getAllPostsDemo } from "../services/api";
+import { usePosts } from "../context/PostContext";
 
 const CATEGORY_FILTERS = ["ALL", "FRONTEND", "BACKEND", "AI", "DEVOPS", "DESIGN"];
 const POSTS_PER_PAGE = 9;
@@ -48,8 +49,9 @@ function getReadTime(content: string): number {
   return Math.max(1, Math.round(content.split(" ").length / 200));
 }
 
-const PostCardGrid = ({ post, index }: { post: Post; index: number }) => {
-  const imageUrl = placeholderImages[index % placeholderImages.length];
+const PostCardGrid = memo(({ post, index }: { post: Post; index: number }) => {
+  const navigate = useNavigate();
+  const imageUrl = post.coverImageUrl || placeholderImages[index % placeholderImages.length];
   const category = getPostCategory(post.tags);
   const readTime = getReadTime(post.content);
 
@@ -71,8 +73,8 @@ const PostCardGrid = ({ post, index }: { post: Post; index: number }) => {
             alt={post.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
-          <span className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-[10px] font-bold
-                           tracking-widest text-[#374151] px-2.5 py-1 rounded-full uppercase">
+          <span className="absolute top-3 right-3 bg-white/90 dark:bg-gray-700 backdrop-blur-sm text-[10px] font-bold
+                           tracking-widest px-2.5 py-1 rounded-full uppercase">
             {category}
           </span>
         </div>
@@ -86,21 +88,30 @@ const PostCardGrid = ({ post, index }: { post: Post; index: number }) => {
           </div>
 
           <h2 className="text-base font-bold text-[#111827] mb-2 line-clamp-2 group-hover:text-secondary transition-colors"
-              style={{ fontFamily: "'Geist', sans-serif" }}>
+            style={{ fontFamily: "'Geist', sans-serif" }}>
             {post.title}
           </h2>
           <p className="text-sm text-[#6b7280] line-clamp-2 leading-relaxed flex-1"
-             style={{ fontFamily: "'Source Serif 4', serif" }}>
+            style={{ fontFamily: "'Source Serif 4', serif" }}>
             {post.content}
           </p>
 
           {/* Footer */}
           <div className="flex items-center justify-between mt-4 pt-4 border-t border-[#f3f4f6]">
-            <div className="flex items-center gap-2">
+            <div
+              className="flex items-center gap-2 hover:text-secondary cursor-pointer transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const authorId = (post as { authorId?: string }).authorId;
+                const identifier = authorId || post.author;
+                navigate(`/profile/${encodeURIComponent(identifier)}`);
+              }}
+            >
               <div className={`w-7 h-7 rounded-full ${avatarBg} flex items-center justify-center text-white text-xs font-bold`}>
                 {initials}
               </div>
-              <span className="text-xs font-medium text-[#374151]">{post.author}</span>
+              <span className="text-xs font-semibold hover:underline text-[#374151]">{post.author}</span>
             </div>
             <span className="text-xs font-semibold text-secondary flex items-center gap-1">
               Read →
@@ -110,7 +121,7 @@ const PostCardGrid = ({ post, index }: { post: Post; index: number }) => {
       </article>
     </Link>
   );
-};
+});
 
 // Skeleton card for loading state
 const SkeletonCard = () => (
@@ -130,6 +141,7 @@ const SkeletonCard = () => (
 );
 
 const Posts = () => {
+  const { allPosts: contextPosts } = usePosts();
   const [allPosts, setAllPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -145,14 +157,14 @@ const Posts = () => {
       setError(null);
       try {
         const data = await getAllPosts();
-        if (!cancelled) setAllPosts(Array.isArray(data) ? data : await getAllPostsDemo());
+        if (!cancelled) {
+          const userCreated = contextPosts.filter((p) => p.isUserPost);
+          const apiPosts = Array.isArray(data) ? data : await getAllPostsDemo();
+          setAllPosts([...userCreated, ...apiPosts]);
+        }
       } catch {
-        // API unavailable — fall back to demo data silently
-        try {
-          const demo = await getAllPostsDemo();
-          if (!cancelled) setAllPosts(demo);
-        } catch (demoErr) {
-          if (!cancelled) setError(extractErrorMessage(demoErr));
+        if (!cancelled) {
+          setAllPosts(contextPosts);
         }
       } finally {
         if (!cancelled) setLoading(false);
@@ -160,12 +172,14 @@ const Posts = () => {
     };
     fetchPosts();
     return () => { cancelled = true; };
-  }, [retryKey]);
+  }, [retryKey, contextPosts]);
 
 
-  const filtered = allPosts
-    .filter((p) => activeFilter === "ALL" || getPostCategory(p.tags) === activeFilter)
-    .sort((a, b) => sortBy === "newest" ? b.id - a.id : a.id - b.id);
+  const filtered = useMemo(() => {
+    return allPosts
+      .filter((p) => activeFilter === "ALL" || getPostCategory(p.tags) === activeFilter)
+      .sort((a, b) => sortBy === "newest" ? b.id - a.id : a.id - b.id);
+  }, [allPosts, activeFilter, sortBy]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / POSTS_PER_PAGE));
   const paginated = filtered.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE);
